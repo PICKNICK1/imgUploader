@@ -1,0 +1,27 @@
+name: animesubscription
+services: 
+    huginn: 
+        container_name: huginn1
+        stdin_open: true
+        tty: true
+        ports:
+            - 3000:3000
+        volumes:
+            - C:\Users\smile\Desktop\data\mysql:/var/lib/mysql
+        image: huginn/huginn
+    qbittorrent:
+        container_name: qbittorrent
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Etc/UTC
+            - WEBUI_PORT=8080
+        ports:
+            - 8080:8080
+            - 6881:6881
+            - 6881:6881/udp
+        volumes:
+            - C:\Users\smile\Desktop\data\config:/config
+            - C:\Users\smile\Desktop\data\downloads:/downloads
+        restart: unless-stopped
+        image: linuxserver/qbittorrent:latest
